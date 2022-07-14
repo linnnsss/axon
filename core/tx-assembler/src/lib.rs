@@ -178,17 +178,21 @@ impl<Adapter: TxAssemblerAdapter + 'static> TxAssemblerImpl<Adapter> {
                     if let Some(sudt_script) = cell.output.type_().to_opt() {
                         let hash = sudt_script.calc_script_hash().unpack();
                         if let Some(required_sudt) = required_sudt_set.get(&hash) {
-                            let mut uint128 = [0u8; 16];
-                            uint128.copy_from_slice(&cell.output_data.to_vec()[..16]);
-                            let offered_sudt = &u128::from_le_bytes(uint128);
-                            if offered_sudt < required_sudt {
+                            let offered_sudt = offered_sudt_set.entry(hash).or_insert(0);
+                            if &offered_sudt.clone() < required_sudt
+                                || offered_ckb.as_u64() < required_ckb.as_u64()
+                            {
+                                let mut uint128 = [0u8; 16];
+                                uint128.copy_from_slice(&cell.output_data.to_vec()[..16]);
+                                let cell_sudt = &u128::from_le_bytes(uint128);
                                 // record total inputs capacity
                                 let capacity = Capacity::shannons(cell.output.capacity().unpack());
-                                real_inputs_capacity =
-                                    real_inputs_capacity.safe_add(capacity).unwrap();
+                                // real_inputs_capacity =
+                                //     real_inputs_capacity.safe_add(capacity).unwrap();
+                                offered_ckb = offered_ckb.safe_add(capacity).unwrap();
                                 // record offered sudt amount
-                                let value = offered_sudt_set.entry(hash).or_insert(0);
-                                *value += offered_sudt;
+                                *offered_sudt = offered_sudt.saturating_add(*cell_sudt);
+                                // *offered_sudt += cell_sudt;
                                 return true;
                             }
                         }

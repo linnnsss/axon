@@ -22,7 +22,7 @@ const ACS_LOCK_TX_HASH: ckb_types::H256 =
 const SUDT_TX_HASH: ckb_types::H256 =
     h256!("0xe12877ebd2c3c364dc46c5c992bcfaf4fee33fa13eebdf82c591fc9825aab769");
 const ACS_REQUEST_TX_HASH: ckb_types::H256 =
-    h256!("0x695480b96d41a2af956f3cf86a4f1dac6ab2cf81ad143788f77183eda512b051");
+    h256!("0x272168c3d7c4576398f6cb82a15490ad07b11602c0af8810f7dc0fd4252717fb");
 
 fn build_script(code_hash: ckb_types::H256, args: &[u8]) -> Script {
     Script::new_builder()
@@ -57,7 +57,7 @@ pub fn build_transfer_output_cell(
         cell = cell
             .as_builder()
             .type_(Some(type_script).pack())
-            .build_exact_capacity(Capacity::zero())
+            .build_exact_capacity(Capacity::bytes(16).unwrap())
             .unwrap();
         output_data = Bytes::from(sudt_amount.to_le_bytes().to_vec());
     }
@@ -151,7 +151,7 @@ pub fn compute_required_ckb_and_sudt(
     for i in 0..tx.outputs().len() {
         if let Some(output) = tx.outputs().get(i) {
             if let Some(sudt_script) = output.type_().to_opt() {
-                let data = tx.outputs_data().get(i).unwrap();
+                let data: Vec<u8> = tx.outputs_data().get(i).unwrap().unpack();
                 let mut uint128 = [0u8; 16];
                 uint128.copy_from_slice(data.as_slice());
                 let required_sudt = u128::from_le_bytes(uint128);
