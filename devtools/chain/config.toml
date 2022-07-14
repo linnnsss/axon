@@ -84,7 +84,7 @@ node_address = "0x0000000000000000000000000000000000000000"
 selection_lock_hash = "0xf32ec1e3274c27ac4cc018c92efec443847e9b78ba8cbedca36f0fa8c35d1c9e"
 checkpoint_type_hash = "0xf32ec1e3274c27ac4cc018c92efec443847e9b78ba8cbedca36f0fa8c35d1c9e"
 acs_lock_code_hash = "0x97e6179be134d47ca10322a1534d8dcb65052de7e099b5556bea924137839bab"
-request_type_code_hash = "0xd8f9afaad8eb3e26a1ef2538bac91d68635502508358ae901941513bfe2edb1d"
+request_type_code_hash = "0xb14817a81bea1231a787122943a487884b193bcf90db94a7afe9ef1ac8c5deb5"
 
 
 [interoperability_extension]
