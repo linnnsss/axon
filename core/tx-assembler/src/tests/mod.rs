@@ -16,7 +16,7 @@ use crate::{IndexerAdapter, TxAssemblerImpl};
 
 const INDEXER_URL: &str = "http://47.111.84.118:81/indexer";
 const METADATA_TYPEID_ARGS: ckb_types::H256 =
-    h256!("0x8de2c7322dd816fb245897403bb8fe9e15170231ea6675054b4cf45bc1d01999");
+    h256!("0x5bdcaa8c3fa923b7378d28d9c26f90a86f871ea456f93b3a9a06a15f10120bcd");
 const STAKE_TYPEID_ARGS: ckb_types::H256 =
     h256!("0x0000000000000000000000000000000000000000000000000000000000000000");
 const METADATA_TYPEID: ckb_types::H256 =
