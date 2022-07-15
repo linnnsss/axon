@@ -73,9 +73,15 @@ where
         let _hash = self
             .ckb_rpc
             .send_transaction(ctx, &tx.inner, Some(OutputsValidator::Passthrough))
-            .await?;
+            .await;
 
-        log::info!("[cross-chain]: send ckb transaction success, hash = {}", _hash);
+        match _hash {
+            Ok(hash) => log::info!("[cross-chain]: send ckb transaction success, hash = {}", hash),
+            Err(err) => {
+                log::error!("[cross-chain]: send ckb transaction fail, reason = {}", err.to_string());
+                return Err(err);
+            }
+        }
         Ok(())
     }
 
