@@ -1,5 +1,5 @@
 const { expect } = require("chai")
-const { ethers } = require("hardhat")
+const { ethers, upgrades } = require("hardhat")
 
 function hexToBytes(hex) {
     for (var bytes = [], c = 0; c < hex.length; c += 2)
@@ -14,7 +14,8 @@ describe("Testing MetadataManager", () => {
 
     before(async () => {
         let deployer = await ethers.getContractFactory("MetadataManager")
-        contract = await deployer.deploy()
+        // contract = await deployer.deploy()
+        contract = await upgrades.deployProxy(deployer, [], { initializer: 'construct' });
         await contract.deployed()
         wallets = await ethers.getSigners()
         metadata = {
