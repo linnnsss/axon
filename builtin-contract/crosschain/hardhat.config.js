@@ -2,6 +2,7 @@ const { getContractAddress } = require("ethers/lib/utils");
 const { task } = require("hardhat/config");
 
 require("@nomiclabs/hardhat-waffle");
+require('@openzeppelin/hardhat-upgrades');
 require('dotenv').config();
 
 const wckb = '0x4af5ec5e3d29d9ddd7f4bf91a022131c41b72352';
