@@ -50,7 +50,7 @@ git clone https://github.com/axonweb3/axon.git && cd axon
 cargo run --release -- -c devtools/chain/config.toml -g devtools/chain/genesis_single_node.json
 ```
 
-## Toolchain
+## Toolchains
 
 Apart from the framework, Axon has toolchains:
 
